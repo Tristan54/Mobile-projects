@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:fluttertesttechno/pages/api_get.dart';
+import 'package:fluttertesttechno/pages/api.dart';
 import 'package:fluttertesttechno/services/check_connection.dart';
 import 'package:http/http.dart' as http;
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertesttechno/pages/api_get.dart';
+import 'package:fluttertesttechno/pages/api.dart';
 import 'package:fluttertesttechno/pages/app.dart';
 import 'package:fluttertesttechno/pages/choose_location.dart';
 import 'package:fluttertesttechno/pages/home.dart';
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         Home.id: (context) => Home(),
         Chooselocation.id: (context) => Chooselocation(),
         Loading.id: (context) => Loading(),
-        ApiGet.id: (context) => ApiGet(),
+        Api.id: (context) => Api(),
       },
     );
   }

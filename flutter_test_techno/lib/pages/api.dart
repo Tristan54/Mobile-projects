@@ -3,21 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:fluttertesttechno/services/api_key.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
-class ApiGet extends StatefulWidget {
+class Api extends StatefulWidget {
   static final String id = 'api_get';
 
   final GlobalKey<ScaffoldState> keyScaffold;
 
-  const ApiGet({
+  const Api({
     Key key,
     this.keyScaffold,
   }) : super(key: key);
 
   @override
-  _ApiGetState createState() => _ApiGetState();
+  _ApiState createState() => _ApiState();
 }
 
-class _ApiGetState extends State<ApiGet> {
+class _ApiState extends State<Api> {
   // instance de la classe ApiGet pour se connecter à l'api https://api-public.univ-lorraine.fr/demo
   ApiKey apiKey = ApiKey();
 
