@@ -38,6 +38,7 @@ class WorldTime {
       time = '${now.hour}:${now.minute}:${now.second}';
     } else {
       time = 'no internet connection';
+      isDaytime = false;
     }
   }
 }
