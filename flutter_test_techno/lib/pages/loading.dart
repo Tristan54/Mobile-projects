@@ -4,6 +4,7 @@ import 'package:fluttertesttechno/pages/app.dart';
 import 'package:fluttertesttechno/services/world_time.dart';
 
 class Loading extends StatefulWidget {
+  // identifiant de la classe pour les routes
   static final String id = 'loading_screen';
 
   @override
@@ -11,6 +12,7 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
+  // appel à l'api
   void setupWorldTime() async {
     WorldTime instance =
         WorldTime(location: 'Paris', flag: 'fr_flag.png', url: '/Europe/Paris');
@@ -34,17 +36,14 @@ class _LoadingState extends State<Loading> {
 
   @override
   Widget build(BuildContext context) {
-    return
-//      Scaffold(
-//      backgroundColor: Colors.blue[900],
-//      body:
-        Container(
+    return Container(
       decoration: BoxDecoration(
         color: Colors.blue[900],
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 50.0),
         child: Center(
+          // widget issu du plugin flutter_spinkit: ^4.1.2+1 pour faire des animations
           child: SpinKitThreeBounce(
             color: Colors.white,
             size: 50.0,
@@ -52,6 +51,5 @@ class _LoadingState extends State<Loading> {
         ),
       ),
     );
-    //);
   }
 }

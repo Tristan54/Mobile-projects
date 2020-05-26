@@ -4,8 +4,10 @@ import 'package:fluttertesttechno/services/api_key.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 class Api extends StatefulWidget {
+  // identifiant de la classe pour les routes
   static final String id = 'api_get';
 
+  // clé du Scaffold utilisé pour afficher une snackbar ou un dialog par exemple
   final GlobalKey<ScaffoldState> keyScaffold;
 
   const Api({
@@ -52,10 +54,10 @@ class _ApiState extends State<Api> {
   );
 
   // pop-up qui ajoute des paramètres
+  // utilise le plugin rflutter_alert: ^1.0.3
   void alert({BuildContext context}) {
     final key = TextEditingController();
     final value = TextEditingController();
-
     final formKey = GlobalKey<FormState>();
 
     Alert(
@@ -104,6 +106,7 @@ class _ApiState extends State<Api> {
     ).show();
   }
 
+  // permet d'afficher une snackbar
   Widget _snackSample({String text}) => SnackBar(
         content: Text(
           text,
@@ -203,6 +206,7 @@ class _ApiState extends State<Api> {
   }
 }
 
+// classe paramètre
 class Param {
   String key;
   String value;

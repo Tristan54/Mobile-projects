@@ -4,6 +4,7 @@ import 'package:fluttertesttechno/pages/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class App extends StatefulWidget {
+  // identifiant de la classe pour les routes
   static final id = 'App';
 
   @override
@@ -11,15 +12,17 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> with SingleTickerProviderStateMixin {
+  // préférence de l'application
   bool isDark = true;
 
   @override
   void initState() {
     super.initState();
-    // initialize the preference
+    // initialise les préférences
     _preferences();
   }
 
+  // tableau qui contient les icônes de la tabBar
   final tabs = [
     Tab(icon: Icon(Icons.home)),
     Tab(icon: Icon(Icons.vpn_key)),
@@ -27,18 +30,20 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    // on récupère les données transmise avec la route
     Map data = ModalRoute.of(context) == null
         ? {'index': 1}
         : ModalRoute.of(context).settings.arguments;
+    // l'index permet d'ouvrir l'application directement avec l'onglet que l'on souhaite
     int index = data['index'];
 
     // on a besoin de l'identifiant du Scaffold pour afficher une snackBar
     GlobalKey<ScaffoldState> _key = GlobalKey();
 
-    // change color for parameters
+    // change la couleur du menu en fonction des préférences
     Color backgroundColor = isDark ? Colors.blueGrey : Colors.grey[300];
 
-    // get preferences before building the app
+    // on récupère les préférences avant de build la vue
     _getPreferences();
 
     // build app
@@ -47,6 +52,7 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
       appBar: AppBar(
         title: Text('API connect'),
       ),
+      // un Drawer permet de faire un menu
       drawer: Drawer(
         child: Container(
           decoration: BoxDecoration(
@@ -68,10 +74,11 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.0),
                     child: Text(
-                      'Thème clair',
+                      'Thème foncé',
                       style: TextStyle(fontSize: 18.0),
                     ),
                   ),
+                  // Switch.adaptive va prendre un style différent selon la plateforme
                   Switch.adaptive(
                       activeColor: Colors.white,
                       value: isDark,
@@ -99,6 +106,7 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
             ),
           ),
           body: TabBarView(
+            // on appel les autres classes en fonction de l'onglet sélectionné
             children: <Widget>[
               Home(
                 p_data: data,
@@ -113,21 +121,26 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
     );
   }
 
+  // initialise les préférences
+  // utilise le plugin shared_preferences: ^0.5.7+3
   _preferences() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
+    // si la préférence n'existe pas on le créer
     if (!prefs.containsKey('theme dark')) {
       prefs.setBool('theme dark', isDark);
     }
   }
 
+  // permet de récupérer les préférences
   _getPreferences() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    isDark = prefs.getBool('thme dark') ?? true;
+    isDark = prefs.getBool('theme dark') ?? true;
   }
 
+  // permet de modifier les préférences
   _setPreferences() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('thme dark', isDark);
+    prefs.setBool('theme dark', isDark);
   }
 }

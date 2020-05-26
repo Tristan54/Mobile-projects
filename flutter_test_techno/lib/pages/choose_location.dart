@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertesttechno/services/world_time.dart';
 
 class Chooselocation extends StatefulWidget {
+  // identifiant de la classe pour les routes
   static final String id = 'choose_location_screen';
 
   @override
@@ -9,6 +10,7 @@ class Chooselocation extends StatefulWidget {
 }
 
 class _ChooselocationState extends State<Chooselocation> {
+  // liste de localisation
   List<WorldTime> locations = [
     WorldTime(location: 'Paris', flag: 'france.png', url: '/Europe/Paris'),
     WorldTime(
@@ -24,6 +26,7 @@ class _ChooselocationState extends State<Chooselocation> {
     WorldTime(location: 'New York', flag: 'USA.png', url: '/America/New_York'),
   ];
 
+  // appel à l'api en fonction de la localisation sélectionnée
   void getTime({int index}) async {
     WorldTime instance = locations[index];
     await instance.getTime();
@@ -47,6 +50,7 @@ class _ChooselocationState extends State<Chooselocation> {
         title: Text('Choose location'),
         elevation: 0,
       ),
+      // liste les localisations
       body: ListView.builder(
         itemCount: locations.length,
         itemBuilder: (context, index) {

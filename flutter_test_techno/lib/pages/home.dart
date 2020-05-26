@@ -5,6 +5,7 @@ import 'package:fluttertesttechno/pages/choose_location.dart';
 import 'package:fluttertesttechno/services/world_time.dart';
 
 class Home extends StatefulWidget {
+  // identifiant de la classe pour les routes
   static final String id = 'home_screen';
 
   final Map p_data;
@@ -21,7 +22,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   Map data = {};
 
-  // refreshing data
+  // actualise les données
   void getTime() async {
     WorldTime instance = WorldTime(
         location: data['location'], flag: data['flag'], url: data['url']);
@@ -38,11 +39,10 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    // get data from other pages
+    // récupération des données
     data = data.isNotEmpty ? data : widget.p_data;
 
-    // create timer to start the refreshing process
-
+    // création du Timer pour l'actualisation
     const oneSecond = const Duration(seconds: 15);
     new Timer.periodic(
         oneSecond,
@@ -52,6 +52,7 @@ class _HomeState extends State<Home> {
               });
             });
 
+    // changement de couleur en fonction de l'heure
     String image = data['isDaytime'] ? 'day.jpg' : 'night.jpg';
     Color textColor = data['isDaytime'] ? Colors.black : Colors.white;
 
@@ -69,8 +70,10 @@ class _HomeState extends State<Home> {
             ),
             FlatButton.icon(
               onPressed: () async {
+                // on push une page au dessus de la courante pour choisir une nouvelle localisation
                 dynamic result =
                     await Navigator.pushNamed(context, Chooselocation.id);
+                // on actualise les données
                 setState(() {
                   data = {
                     'time': result['time'],
