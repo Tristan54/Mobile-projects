@@ -108,7 +108,7 @@ class _ApiState extends State<Api> {
   );
 
   // pop-up qui ajoute des paramètres
-  // utilise le plugin rflutter_alert: ^1.0.3
+  // utilise le package rflutter_alert: ^1.0.3
   void alert({BuildContext context}) {
     final key = TextEditingController();
     final value = TextEditingController();

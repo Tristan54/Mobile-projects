@@ -15,7 +15,7 @@ class GetBook {
     await checkConnection.checkConnection();
 
     if (checkConnection.is_connect) {
-      // création de la requête avec le plugin http: ^0.12.1
+      // création de la requête avec le package http: ^0.12.1
       http.Response response = await http.get(
           'https://ws-mobiles.univ-lorraine.fr/biblio/recherche?isbn=$isbn');
 

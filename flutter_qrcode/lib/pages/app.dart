@@ -26,7 +26,7 @@ class _AppState extends State<App> {
     // résultat
     String barcodeScanRes;
 
-    // utilise le plugin flutter_barcode_scanner: ^1.0.1 pour scanner un code barre
+    // utilise le package flutter_barcode_scanner: ^1.0.1 pour scanner un code barre
     try {
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
           "#ff6666", "Cancel", true, ScanMode.BARCODE);
@@ -56,7 +56,7 @@ class _AppState extends State<App> {
     // résultat
     String barcodeScanRes;
 
-    // utilise le plugin flutter_barcode_scanner: ^1.0.1 pour scanner un qrcode
+    // utilise le package flutter_barcode_scanner: ^1.0.1 pour scanner un qrcode
     try {
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
           "#ff6666", "Cancel", true, ScanMode.QR);
@@ -73,7 +73,7 @@ class _AppState extends State<App> {
       result = barcodeScanRes;
     });
 
-    // on utilise le plugin url_launcher: ^5.4.10 pour ouvrir un navigateur avec le résultat
+    // on utilise le package url_launcher: ^5.4.10 pour ouvrir un navigateur avec le résultat
     if (await canLaunch(result)) {
       await launch(result);
     } else {
@@ -82,7 +82,7 @@ class _AppState extends State<App> {
   }
 
   // méthode qui permet d'ouvrir un mailer avec différentes options
-  // on utilise le plugin flutter_mailer: ^0.5.0
+  // on utilise le package flutter_mailer: ^0.5.0
   final MailOptions mailOptions = MailOptions(
     body: 'a long body for the email <br> with a subset of HTML',
     subject: 'the Email Subject',

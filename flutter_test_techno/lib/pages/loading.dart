@@ -43,7 +43,7 @@ class _LoadingState extends State<Loading> {
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 50.0),
         child: Center(
-          // widget issu du plugin flutter_spinkit: ^4.1.2+1 pour faire des animations
+          // widget issu du package flutter_spinkit: ^4.1.2+1 pour faire des animations
           child: SpinKitThreeBounce(
             color: Colors.white,
             size: 50.0,

@@ -39,7 +39,7 @@ class ApiKey {
       };
 
       // on regarde s'il existe un fichier en cache, sinon on fait un appel
-      // on utilise le plugin flutter_cache_manager: ^1.2.2 et la classe cache_manager_get.dart
+      // on utilise le package flutter_cache_manager: ^1.2.2 et la classe cache_manager_get.dart
       var file = await MyCacheManagerGet().getSingleFile(url, headers: headers);
       if (file != null && await file.exists()) {
         var response = await file.readAsString();
@@ -70,7 +70,7 @@ class ApiKey {
         'X-Gravitee-Api-Key': '97138730-a63f-4f14-a33e-4649c3a11791'
       };
 
-      // on fait l'appel avec le plugin http: ^0.12.1
+      // on fait l'appel avec le package http: ^0.12.1
       var response = await http.post(url, body: body_builder, headers: headers);
 
       // séparation des résultats du body

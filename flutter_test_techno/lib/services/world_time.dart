@@ -18,7 +18,7 @@ class WorldTime {
     await checkConnection.checkConnection();
 
     if (checkConnection.is_connect) {
-      // on fait la requête avec le plugin http: ^0.12.1
+      // on fait la requête avec le package http: ^0.12.1
       http.Response response =
           await http.get('http://worldtimeapi.org/api/timezone/$url');
       Map data = jsonDecode(response.body);

@@ -2,13 +2,13 @@ import 'dart:io';
 
 import 'package:connectivity/connectivity.dart';
 
-// cette classe permet de vérifie si le device a accès à internet
+// cette classe permet de vérifier si le device a accès à internet
 class CheckConnection {
   bool is_connect; // vrai si le device est connecté, false sinon
 
   Future<void> checkConnection() async {
     // regarde si le device est connecté à un réseau (wi-fi ou mobile)
-    // on utilise le plugin connectivity: ^0.4.8+6
+    // on utilise le package connectivity: ^0.4.8+6
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.mobile) {
       is_connect = true;

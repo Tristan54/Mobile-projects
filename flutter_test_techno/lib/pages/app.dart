@@ -122,7 +122,7 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
   }
 
   // initialise les préférences
-  // utilise le plugin shared_preferences: ^0.5.7+3
+  // utilise le package shared_preferences: ^0.5.7+3
   _preferences() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 

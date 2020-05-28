@@ -6,7 +6,7 @@ class CheckConnection {
   bool is_connect; // true si le device est connecté à internet, false sinon
 
   Future<void> checkConnection() async {
-    // vérification qui utilise le plugin connectivity: ^0.4.8+6
+    // vérification qui utilise le package connectivity: ^0.4.8+6
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.mobile) {
       is_connect = true;
