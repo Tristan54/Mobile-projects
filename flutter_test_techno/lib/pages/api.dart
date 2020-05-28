@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertesttechno/services/api_key.dart';
+import 'package:fluttertesttechno/services/pram_helper.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:sqlite_viewer/sqlite_viewer.dart';
 
 class Api extends StatefulWidget {
   // identifiant de la classe pour les routes
@@ -20,19 +22,71 @@ class Api extends StatefulWidget {
 }
 
 class _ApiState extends State<Api> {
+  // instance de la base de donnée
+  ParamProvider db_param;
+
   // instance de la classe ApiGet pour se connecter à l'api https://api-public.univ-lorraine.fr/demo
-  ApiKey apiKey = ApiKey();
+  ApiKey apiKey;
+
+  @override
+  void initState() {
+    super.initState();
+    apiKey = ApiKey();
+    db_param = ParamProvider();
+
+    // ajouter les paramètres par défaut dans la BDD
+    initParams();
+  }
+
+  // fermeture de la basse de données à la fermeture de la page / application
+//  @override
+//  void dispose() async {
+//    await db_param.close();
+//  }
 
   // liste des paramètres
-  List<Param> params = [
-    Param(key: 'premier', value: '1'),
-    Param(key: 'deuxieme', value: '2'),
-    Param(key: 'troisieme', value: '3'),
-  ];
+  List<Param> params = [];
+  int nb_param_courant = 1;
 
-  // fonction pour ajouter un paramètre
-  void addParams({String key, String value}) {
-    params.add(Param(key: key, value: value));
+  // fonction pour ajouter un paramètre et l'insérer dans la BDD s'il n'existe pas encore
+  Future<void> addParam({Param param}) async {
+    Param tmp = await db_param.getParam(nb_param_courant);
+    if (tmp == null) {
+      await db_param.insert(param);
+      nb_param_courant++;
+    }
+  }
+
+  // ajoute les paramètres par défaut dans la BDD
+  Future<void> initParams() async {
+    // ouverture de la basse de données
+    await db_param.open();
+
+    await addParam(param: Param(key: 'premier', value: '1'));
+    await addParam(param: Param(key: 'deuxieme', value: '2'));
+    await addParam(param: Param(key: 'troisieme', value: '3'));
+
+    await getParams();
+
+    setState(() {});
+  }
+
+  // récupère tous les paramètres dans la BDD
+  Future<void> getParams() async {
+    bool fin = false;
+    Param tmp;
+    int i = 1;
+    while (!fin) {
+      tmp = await db_param.getParam(i);
+      if (tmp != null) {
+        if (!params.contains(tmp)) {
+          params.add(tmp);
+        }
+        i++;
+      } else {
+        fin = true;
+      }
+    }
   }
 
   // Style graphique du pop-up
@@ -63,7 +117,7 @@ class _ApiState extends State<Api> {
     Alert(
       style: alertStyle,
       context: context,
-      title: 'Ajouter un params',
+      title: 'Ajouter un param',
       content: Form(
         key: formKey,
         child: Column(
@@ -92,13 +146,14 @@ class _ApiState extends State<Api> {
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
           color: Colors.green,
-          onPressed: () {
-            setState(() {
-              if (formKey.currentState.validate()) {
-                addParams(key: key.text, value: value.text);
-                Navigator.pop(context);
-              }
-            });
+          onPressed: () async {
+            if (formKey.currentState.validate()) {
+              await addParam(param: Param(key: key.text, value: value.text));
+              await getParams();
+
+              setState(() {});
+              Navigator.pop(context);
+            }
           },
           width: 120,
         )
@@ -122,10 +177,101 @@ class _ApiState extends State<Api> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            ListView.builder(
+      child: Column(
+        children: <Widget>[
+          FlatButton(
+            onPressed: () async {
+              alert(context: context);
+            },
+            color: Colors.green,
+            textColor: Colors.white,
+            padding: EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Icon(Icons.add),
+                Text(
+                  'ajouter params',
+                  style: TextStyle(fontSize: 22.0),
+                ),
+              ],
+            ),
+          ),
+          FlatButton(
+            onPressed: () async {
+              await apiKey.get(params: params);
+
+              var text = new StringBuffer();
+              apiKey.results.forEach((key, value) {
+                text.write(key + ' : ' + value + '\n');
+              });
+              final bar = _snackSample(text: text.toString());
+              widget.keyScaffold.currentState.showSnackBar(bar);
+            },
+            color: Colors.blue,
+            textColor: Colors.white,
+            padding: EdgeInsets.all(8.0),
+            child: Text(
+              'envoyer en get',
+              style: TextStyle(fontSize: 22.0),
+            ),
+          ),
+          FlatButton(
+            onPressed: () async {
+              await apiKey.post(body: params);
+
+              var text = new StringBuffer();
+              apiKey.results.forEach((key, value) {
+                text.write(key + ' : ' + value + '\n');
+              });
+              final bar = _snackSample(text: text.toString());
+              widget.keyScaffold.currentState.showSnackBar(bar);
+            },
+            color: Colors.blue,
+            textColor: Colors.white,
+            padding: EdgeInsets.all(8.0),
+            child: Text(
+              'envoyer en post',
+              style: TextStyle(fontSize: 22.0),
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              FlatButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => DatabaseList()));
+                },
+                color: Colors.red,
+                textColor: Colors.white,
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  'voir BDD',
+                  style: TextStyle(fontSize: 22.0),
+                ),
+              ),
+              SizedBox(
+                width: 30.0,
+              ),
+              FlatButton(
+                onPressed: () {
+                  db_param.drop();
+                },
+                color: Colors.red,
+                textColor: Colors.white,
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  'drop BDD',
+                  style: TextStyle(fontSize: 22.0),
+                ),
+              )
+            ],
+          ),
+          Expanded(
+            flex: 7,
+            child: ListView.builder(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               itemCount: params.length,
@@ -134,7 +280,12 @@ class _ApiState extends State<Api> {
                   margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                   child: ListTile(
                     onTap: () {
-                      print(params[index].key);
+                      final bar = _snackSample(text: params[index].key);
+                      widget.keyScaffold.currentState.showSnackBar(bar);
+                    },
+                    onLongPress: () {
+                      final bar = _snackSample(text: params[index].value);
+                      widget.keyScaffold.currentState.showSnackBar(bar);
                     },
                     title:
                         Text(params[index].key + ' : ' + params[index].value),
@@ -142,74 +293,9 @@ class _ApiState extends State<Api> {
                 );
               },
             ),
-            FlatButton(
-              onPressed: () {
-                alert(context: context);
-              },
-              color: Colors.green,
-              textColor: Colors.white,
-              padding: EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Icon(Icons.add),
-                  Text(
-                    'ajouter params',
-                    style: TextStyle(fontSize: 22.0),
-                  ),
-                ],
-              ),
-            ),
-            FlatButton(
-              onPressed: () async {
-                await apiKey.get(params: params);
-
-                var text = new StringBuffer();
-                apiKey.results.forEach((key, value) {
-                  text.write(key + ' : ' + value + '\n');
-                });
-                final bar = _snackSample(text: text.toString());
-                widget.keyScaffold.currentState.showSnackBar(bar);
-              },
-              color: Colors.blue,
-              textColor: Colors.white,
-              padding: EdgeInsets.all(8.0),
-              child: Text(
-                'envoyer en get',
-                style: TextStyle(fontSize: 22.0),
-              ),
-            ),
-            FlatButton(
-              onPressed: () async {
-                await apiKey.post(body: params);
-
-                var text = new StringBuffer();
-                apiKey.results.forEach((key, value) {
-                  text.write(key + ' : ' + value + '\n');
-                });
-                final bar = _snackSample(text: text.toString());
-                widget.keyScaffold.currentState.showSnackBar(bar);
-              },
-              color: Colors.blue,
-              textColor: Colors.white,
-              padding: EdgeInsets.all(8.0),
-              child: Text(
-                'envoyer en post',
-                style: TextStyle(fontSize: 22.0),
-              ),
-            )
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
-}
-
-// classe paramètre
-class Param {
-  String key;
-  String value;
-
-  Param({this.key, this.value});
 }

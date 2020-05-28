@@ -1,14 +1,14 @@
 import 'dart:convert';
 
-import 'package:fluttertesttechno/pages/api.dart';
 import 'package:fluttertesttechno/services/check_connection.dart';
+import 'package:fluttertesttechno/services/pram_helper.dart';
 import 'package:http/http.dart' as http;
 
 import 'cache_manager_get.dart';
 
 class ApiKey {
   List<Param> params;
-  Map results;
+  Map results = {};
 
   Future<void> get({List params}) async {
     // instance de la classe CheckConnection, permet de vérifie si le device est connecté à internet
