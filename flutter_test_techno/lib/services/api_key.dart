@@ -32,7 +32,7 @@ class ApiKey {
         }
       }
 
-      // on créer la requêtes avec un header
+      // on crée la requêtes avec un header
       String url = 'https://api-public.univ-lorraine.fr/demo?$build_params';
       Map<String, String> headers = {
         'X-Gravitee-Api-Key': '97138730-a63f-4f14-a33e-4649c3a11791'
@@ -48,6 +48,8 @@ class ApiKey {
         Map data = jsonDecode(response.toString());
         results = data['query_params'];
       }
+    } else {
+      return;
     }
   }
 
@@ -58,13 +60,13 @@ class ApiKey {
 
     // si le device est connecté à internet
     if (checkConnection.is_connect) {
-      // on créer le body de la requête
+      // on crée le body de la requête
       Map<String, String> body = {};
       builder.forEach((element) {
         body[element.key] = element.value;
       });
 
-      // on créer l'url et le header
+      // on crée l'url et le header
       String url = 'https://api-public.univ-lorraine.fr/demo';
       Map<String, String> headers = {
         'X-Gravitee-Api-Key': '97138730-a63f-4f14-a33e-4649c3a11791'
@@ -81,6 +83,8 @@ class ApiKey {
         var element = tmp[i].split('=');
         results[element[0]] = element[1];
       }
-    } else {}
+    } else {
+      return;
+    }
   }
 }

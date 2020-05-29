@@ -43,10 +43,6 @@ class MyCacheManagerGet extends BaseCacheManager {
     try {
       var res = await http.get(url, headers: headers);
 
-      // add a custom response header
-      // to regulate the caching time
-      // when the server doesn't provide cache-control
-      res.headers.addAll({'cache-control': 'private, max-age=120'});
       response = HttpFileFetcherResponse(res);
     } on SocketException {
       print('No internet connection');
