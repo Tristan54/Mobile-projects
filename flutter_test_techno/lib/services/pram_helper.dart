@@ -80,7 +80,7 @@ create table $tableParam (
     return await db.delete(tableParam, where: '$columnId = ?', whereArgs: [id]);
   }
 
-  Future<int> drop() async {
+  Future<void> delete_table() async {
     await db.execute('delete from $tableParam');
   }
 

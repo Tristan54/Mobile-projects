@@ -257,13 +257,13 @@ class _ApiState extends State<Api> {
               ),
               FlatButton(
                 onPressed: () {
-                  db_param.drop();
+                  db_param.delete_table();
                 },
                 color: Colors.red,
                 textColor: Colors.white,
                 padding: EdgeInsets.all(8.0),
                 child: Text(
-                  'drop BDD',
+                  'delete BDD',
                   style: TextStyle(fontSize: 22.0),
                 ),
               )
