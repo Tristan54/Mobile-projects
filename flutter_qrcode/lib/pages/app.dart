@@ -42,7 +42,7 @@ class _AppState extends State<App> {
       result = barcodeScanRes;
     });
 
-    // on récupère les données via l'api et le ,uméro isbn
+    // on récupère les données via l'api et le numéro isbn
     await getBook.getBook(isbn: result);
 
     // on ouvre une nouvelle fenêtre au dessus de la courante

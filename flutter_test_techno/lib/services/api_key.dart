@@ -51,7 +51,7 @@ class ApiKey {
     }
   }
 
-  Future<void> post({List<Param> body}) async {
+  Future<void> post({List<Param> builder}) async {
     // instance de la classe CheckConnection, permet de vérifie si le device est connecté à internet
     CheckConnection checkConnection = CheckConnection();
     await checkConnection.checkConnection();
@@ -59,9 +59,9 @@ class ApiKey {
     // si le device est connecté à internet
     if (checkConnection.is_connect) {
       // on créer le body de la requête
-      Map<String, String> body_builder = {};
-      body.forEach((element) {
-        body_builder[element.key] = element.value;
+      Map<String, String> body = {};
+      builder.forEach((element) {
+        body[element.key] = element.value;
       });
 
       // on créer l'url et le header
@@ -71,7 +71,7 @@ class ApiKey {
       };
 
       // on fait l'appel avec le package http: ^0.12.1
-      var response = await http.post(url, body: body_builder, headers: headers);
+      var response = await http.post(url, body: body, headers: headers);
 
       // séparation des résultats du body
       var tmp = response.body.split('&');

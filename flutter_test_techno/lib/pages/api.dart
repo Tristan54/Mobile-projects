@@ -219,7 +219,7 @@ class _ApiState extends State<Api> {
           ),
           FlatButton(
             onPressed: () async {
-              await apiKey.post(body: params);
+              await apiKey.post(builder: params);
 
               var text = new StringBuffer();
               apiKey.results.forEach((key, value) {
