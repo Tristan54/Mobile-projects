@@ -58,7 +58,7 @@ class _ApiState extends State<Api> {
   }
 
   // ajoute les paramètres par défaut dans la BDD
-  Future<void> initParams() async {
+  void initParams() async {
     // ouverture de la basse de données
     await db_param.open();
 

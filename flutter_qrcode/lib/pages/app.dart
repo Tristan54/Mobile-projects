@@ -133,3 +133,47 @@ class _AppState extends State<App> {
     );
   }
 }
+
+// V2
+
+//_camState
+//? Center(
+//child: SizedBox(
+//height: 1000,
+//width: 500,
+//child: QRScannerCamera(
+//onError: (context, error) => Text(
+//error.toString(),
+//style: TextStyle(color: Colors.red),
+//),
+//qrCodeCallback: (code) {
+//_qrCallback(code);
+//},
+//),
+//),
+//)
+//: Center(
+//child: Text(_qrInfo),
+//),
+
+//String _qrInfo = 'Scan a QR/Bar code';
+//bool _camState = false;
+//
+//@override
+//void initState() {
+//  super.initState();
+//  _scanCode();
+//}
+//
+//_qrCallback(String code) {
+//  setState(() {
+//    _camState = false;
+//    _qrInfo = code;
+//  });
+//}
+//
+//_scanCode() {
+//  setState(() {
+//    _camState = true;
+//  });
+//}
