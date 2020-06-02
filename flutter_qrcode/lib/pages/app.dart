@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
@@ -93,8 +96,34 @@ class _AppState extends State<App> {
     attachments: [''],
   );
 
+  // permet de récupérer des infos sur le device
+  // utilise le package device_info 0.4.2+4
+  void info() async {
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+
+    if (Platform.isAndroid) {
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      var release = androidInfo.version.release;
+      var sdkInt = androidInfo.version.sdkInt;
+      var manufacturer = androidInfo.manufacturer;
+      var model = androidInfo.model;
+      print('Android $release (SDK $sdkInt), $manufacturer $model');
+    }
+
+    if (Platform.isIOS) {
+      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+      var systemName = iosInfo.systemName;
+      var version = iosInfo.systemVersion;
+      var name = iosInfo.name;
+      var model = iosInfo.model;
+      print('$systemName $version, $name $model');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    info();
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Scanner'),
