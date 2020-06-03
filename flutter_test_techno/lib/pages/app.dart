@@ -69,6 +69,12 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
                   ),
                 ),
               ),
+              Divider(
+                endIndent: 10.0,
+                indent: 10.0,
+                thickness: 2,
+                color: Colors.black,
+              ),
               Row(
                 children: <Widget>[
                   Padding(

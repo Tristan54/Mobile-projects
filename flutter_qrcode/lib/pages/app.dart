@@ -4,7 +4,6 @@ import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:flutter_mailer/flutter_mailer.dart';
 import 'package:flutterqrcode/pages/book.dart';
 import 'package:flutterqrcode/services/get_book.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -18,7 +17,7 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  // résultat issu des scannerd du code barre ou du qrcode
+  // résultat issu des scanners du code barre ou du qrcode
   String result = '';
 
   // Instance de la classe getBook qui permet de faire les appels aux api
@@ -32,7 +31,7 @@ class _AppState extends State<App> {
     // utilise le package flutter_barcode_scanner: ^1.0.1 pour scanner un code barre
     try {
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-          "#ff6666", "Cancel", true, ScanMode.BARCODE);
+          "#00BDFF", "Cancel", true, ScanMode.BARCODE);
     } on PlatformException {
       barcodeScanRes = 'Failed to get platform version.';
     }
@@ -85,16 +84,17 @@ class _AppState extends State<App> {
   }
 
   // méthode qui permet d'ouvrir un mailer avec différentes options
-  // on utilise le package flutter_mailer: ^0.5.0
-  final MailOptions mailOptions = MailOptions(
-    body: 'a long body for the email <br> with a subset of HTML',
-    subject: 'the Email Subject',
-    recipients: ['example@example.com'],
-    isHTML: true,
-    bccRecipients: ['other@example.com'],
-    ccRecipients: ['third@example.com'],
-    attachments: [''],
-  );
+  // on utilise le package url_launcher 5.4.10
+  Future<void> mailer() async {
+    String mail = 'mailto:smith@example.org?subject=News&body=New%20plugin';
+    String sms = 'sms:5550101234';
+
+    if (await canLaunch(mail)) {
+      await launch(mail);
+    } else {
+      throw 'Could not launch $mail';
+    }
+  }
 
   // permet de récupérer des infos sur le device
   // utilise le package device_info 0.4.2+4
@@ -155,7 +155,7 @@ class _AppState extends State<App> {
       floatingActionButton: FloatingActionButton(
         elevation: 8.0,
         onPressed: () async {
-          await FlutterMailer.send(mailOptions);
+          await mailer();
         },
         child: Icon(Icons.mail),
       ),
