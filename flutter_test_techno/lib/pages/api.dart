@@ -117,7 +117,7 @@ class _ApiState extends State<Api> {
     Alert(
       style: alertStyle,
       context: context,
-      title: 'Ajouter un param',
+      title: 'Ajouter un paramètre',
       content: Form(
         key: formKey,
         child: Column(
