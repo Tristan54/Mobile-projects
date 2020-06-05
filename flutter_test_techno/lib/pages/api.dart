@@ -180,7 +180,7 @@ class _ApiState extends State<Api> {
         children: <Widget>[
           FlatButton(
             onPressed: () async {
-              // clique
+              alert(context: context);
             },
             color: Colors.green,
             textColor: Colors.white,
