@@ -150,7 +150,6 @@ class _ApiState extends State<Api> {
             if (formKey.currentState.validate()) {
               await addParam(param: Param(key: key.text, value: value.text));
               await getParams();
-
               setState(() {});
               Navigator.pop(context);
             }
@@ -181,7 +180,7 @@ class _ApiState extends State<Api> {
         children: <Widget>[
           FlatButton(
             onPressed: () async {
-              alert(context: context);
+              // clique
             },
             color: Colors.green,
             textColor: Colors.white,
@@ -192,7 +191,7 @@ class _ApiState extends State<Api> {
               children: <Widget>[
                 Icon(Icons.add),
                 Text(
-                  'ajouter params',
+                  'ajouter un paramètre',
                   style: TextStyle(fontSize: 22.0),
                 ),
               ],
