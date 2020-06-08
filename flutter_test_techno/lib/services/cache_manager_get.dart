@@ -42,7 +42,6 @@ class MyCacheManagerGet extends BaseCacheManager {
     // Do things with headers, the url or whatever.
     try {
       var res = await http.get(url, headers: headers);
-
       response = HttpFileFetcherResponse(res);
     } on SocketException {
       print('No internet connection');

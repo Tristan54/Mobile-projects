@@ -86,7 +86,7 @@ class _AppState extends State<App> {
   // méthode qui permet d'ouvrir un mailer avec différentes options
   // on utilise le package url_launcher 5.4.10
   Future<void> mailer() async {
-    String mail = 'mailto:smith@example.org?subject=News&body=New%20plugin';
+    String mail = 'mailto:smith@example.org?subject=News&body=New plugin';
     String sms = 'sms:5550101234';
 
     if (await canLaunch(mail)) {

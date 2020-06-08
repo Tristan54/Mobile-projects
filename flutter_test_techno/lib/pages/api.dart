@@ -55,6 +55,8 @@ class _ApiState extends State<Api> {
       await db_param.insert(param);
       nb_param_courant++;
     }
+
+    print('fait');
   }
 
   // ajoute les paramètres par défaut dans la BDD
@@ -150,7 +152,9 @@ class _ApiState extends State<Api> {
             if (formKey.currentState.validate()) {
               await addParam(param: Param(key: key.text, value: value.text));
               await getParams();
-              setState(() {});
+              setState(() {
+                print('ici');
+              });
               Navigator.pop(context);
             }
           },
