@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertesttechno/pages/api.dart';
+import 'package:fluttertesttechno/pages/cas.dart';
 import 'package:fluttertesttechno/pages/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -26,6 +27,7 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
   final tabs = [
     Tab(icon: Icon(Icons.home)),
     Tab(icon: Icon(Icons.vpn_key)),
+    Tab(icon: Icon(Icons.lock_open)),
   ];
 
   @override
@@ -117,9 +119,8 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
               Home(
                 p_data: data,
               ),
-              Api(
-                keyScaffold: _key,
-              ),
+              Api(keyScaffold: _key),
+              AuthCAS(keyScaffold: _key),
             ],
           ),
         ),
