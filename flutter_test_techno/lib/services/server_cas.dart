@@ -11,7 +11,7 @@ class ServerCAS {
   Future<Map<String, dynamic>> post_tgt(Map login) async {
     Map<String, dynamic> result = {};
 
-    // instance de la classe CheckConnection, permet de vérifie si le device est connecté à internet
+    // instance de la classe CheckConnection, permet de vérifier si le device est connecté à internet
     CheckConnection checkConnection = CheckConnection();
     await checkConnection.checkConnection();
 
@@ -20,14 +20,14 @@ class ServerCAS {
       String body =
           'username=${login['username']}&password=${login['password']}';
 
-      // on crée l'url
+      // on créé l'url
       String url = 'https://auth.univ-lorraine.fr/REST/tickets';
 
       // on fait l'appel avec le package http: ^0.12.1
       var response = await http.post(url, body: body);
 
       if (response.statusCode == 201) {
-        // séparation des résultats du body
+        // séparation du résultat du body
         var document = parse(response.body);
         var form = document.body.children[1];
         var tab = form.outerHtml.split(' ');
